@@ -8,7 +8,7 @@ import gunicorn
 
 app = Flask(__name__)
 api = Api(app)
-
+app.run()
 
 @app.route('/toxicity_py/api/users/<string:id>', methods=['GET'])
 def get_users(id):
