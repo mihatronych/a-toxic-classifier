@@ -8,7 +8,7 @@ import gunicorn
 
 app = Flask(__name__)
 api = Api(app)
-app.run(host='localhost',port=7001, debug=True)
+#app.run(host='localhost',port=7001, debug=True)
 
 @app.route('/toxicity_py/api/users/<string:id>', methods=['GET'])
 def get_users(id):
@@ -189,4 +189,6 @@ class Post(Resource):
 
 api.add_resource(Post, "/toxicity_py/api/post/<string:post_id>")
 
-
+if __name__ == "__main__":
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=8080)
