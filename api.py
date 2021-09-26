@@ -22,7 +22,7 @@ def get_users(id):
 @app.route('/toxicity_py/api/posts/<string:id>', methods=['GET'])
 def get_posts(id):
     try:
-        posts = forVK.get_posts(id)
+        posts = forVK.get_posts(owner=id)
         marked_posts = []
         messages = {}
         for i in posts['items']:

@@ -44,8 +44,8 @@ def get_post(post_id):
 # получить получить посты владельца (группы или пользователя) по его ID
 def get_posts(owner, count=100):
     try:
-        if str.isdigit(str(owner)):
-            return vk_api.wall.get(owner_id=owner, count=str(count), filter="all")
+        if owner.lstrip('-').isdigit():
+            return vk_api.wall.get(owner_id=int(owner), count=str(count), filter="all")
         else:
             return vk_api.wall.get(domain=owner, count=str(count), filter="all")
     except vk.exceptions.VkAPIError as e:
@@ -54,7 +54,7 @@ def get_posts(owner, count=100):
 
 def get_posts_comments(owner, post_id, count=10):
     try:
-        if str.isdigit(str(owner)) is False:
+        if owner.lstrip('-').isdigit() is False:
             owner = vk_api.wall.get(domain=owner, count=str(count), filter="all")['items'][0]['owner_id']
         return vk_api.wall.getComments(owner_id=owner, post_id=post_id, count=str(count), sort="asc", preview_length=0)
     except vk.exceptions.VkAPIError as e:
@@ -63,7 +63,7 @@ def get_posts_comments(owner, post_id, count=10):
 
 def get_comment_comments(owner, post_id, comment_id, count=10):
     try:
-        if str.isdigit(str(owner)) is False:
+        if owner.lstrip('-').isdigit() is False:
             owner = vk_api.wall.get(domain=owner, count=str(count), filter="all")['items'][0]['owner_id']
         return vk_api.wall.getComments(owner_id=owner, comment_id=comment_id, post_id=post_id, count=str(count),
                                        sort="asc", preview_length=0)
@@ -73,7 +73,7 @@ def get_comment_comments(owner, post_id, comment_id, count=10):
 
 def get_users_followers(user_id, count=100):
     try:
-        if str.isdigit(str(user_id)) is False:
+        if user_id.lstrip('-').isdigit() is False:
             user_id = vk_api.users.get(user_ids=user_id)[0]['id']
         return vk_api.users.getFollowers(user_id=user_id, count=count, fields="photo_200, is_friend, wall_comments")
     except vk.exceptions.VkAPIError as e:
@@ -82,7 +82,7 @@ def get_users_followers(user_id, count=100):
 
 def get_users_subscriptions(user_id, count=100):
     try:
-        if str.isdigit(str(user_id)) is False:
+        if user_id.lstrip('-').isdigit() is False:
             user_id = vk_api.users.get(user_ids=user_id)[0]['id']
         return vk_api.users.getSubscriptions(user_id=user_id, count=count)
     except vk.exceptions.VkAPIError as e:
@@ -91,7 +91,7 @@ def get_users_subscriptions(user_id, count=100):
 
 def get_groups_members(group_id, count=1000):
     try:
-        if str.isdigit(str(group_id)) is False:
+        if group_id.lstrip('-').isdigit() is False:
             group_id = vk_api.groups.getById(group_ids=group_id)[0]['id']
         return vk_api.groups.getMembers(group_id=group_id, sort="id_asc", count=count)
     except vk.exceptions.VkAPIError as e:
