@@ -120,7 +120,7 @@ class MyTokenizer:
             for sent in nltk.sent_tokenize(document):
                 tokenized_doc += nltk.word_tokenize(sent)
             transformed_X.append(np.array(tokenized_doc))
-        return np.array(transformed_X)
+        return np.array(transformed_X, dtype=object)
 
     def fit_transform(self, X, y=None):
         return self.transform(X)
