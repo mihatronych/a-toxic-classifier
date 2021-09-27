@@ -45,7 +45,6 @@ def get_post(post_id):
 def get_posts(owner, count=10):
     try:
         if owner.lstrip('-').isdigit():
-
             return vk_api.wall.get(owner_id=int(owner), count=str(count), filter="all")
         else:
             return vk_api.wall.get(domain=owner, count=str(count), filter="all")
