@@ -85,7 +85,6 @@ def get_subscriptions(id):
 def get_groups(id):
     try:
         groups = forVK.get_group(id)
-        # print(groups)
         return jsonify({'groups': groups})
     except:
         return {'message': "Что-то пошло не так!"}
@@ -111,7 +110,6 @@ def get_message():
                 'message': comment,
                 'toxic': str(toxic[1])
             })
-        print(result)
         return jsonify(result)
     else:
         abort(400)
@@ -128,7 +126,6 @@ def get_messages():
                 'message': comment,
                 'toxic': str(toxic[1])
             })
-        print(result)
         return jsonify(result)
     else:
         abort(400)
@@ -180,13 +177,14 @@ class Post(Resource):
     def get(self, post_id):
         try:
             post = forVK.get_post(post_id)
-            print(post)
             marked_post = set_post_toxicity([post])
             owner = forVK.get_group(str(post['owner_id']).replace('-', ''))[0]
             return {'post': marked_post, 'owner': owner}
         except:
             abort(500, 'Something goes wrong')
 
+
+api.add_resource(Post, "/toxicity_py/api/post/<string:post_id>")
 
 if __name__ == "__main__":
     serve(app, host="0.0.0.0", port=8080)
