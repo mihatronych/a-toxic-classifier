@@ -22,7 +22,7 @@ def get_users(id):
 
 @app.route('/toxicity_py/api/posts/<string:id>', methods=['GET'])
 def get_posts(id):
-        #try:
+    try:
         posts = forVK.get_posts(id)
         marked_posts = []
         messages = {}
@@ -39,8 +39,8 @@ def get_posts(id):
             it = it + 1
 
         return {'posts': posts, 'labeled': marked_posts}
-        #except:
-        #abort(400)
+    except:
+        abort(400)
 
 
 @app.route('/toxicity_py/api/comments/<string:group_screen_name>/<string:post_id>', methods=['GET'])
