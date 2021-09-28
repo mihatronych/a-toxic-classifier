@@ -233,18 +233,17 @@ def training_data(input_data):
 def classifier(messages):
     clear_message = map(preprocessing_data, messages)
     model_vect = read_pickle('w2v_model5')
-    # mev = MeanEmbeddingVectorizer(model_vect)
-    # X_train_counts = mev.fit_transform(clear_message)
-    # X_train_counts.shape[0]
-    # scaler = MinMaxScaler(feature_range=(0, 100))
-    # scaler.fit(X_train_counts)
-    # X_train_counts = scaler.transform(X_train_counts)
-    # X_train_counts = sparse.csr_matrix(X_train_counts)
-    #
-    # model = read_pickle('modelSVCw2v')
-    # predicted = model.predict_proba(X_train_counts)
-    # return zip(messages, predicted)
-    return ['boob']
+    mev = MeanEmbeddingVectorizer(model_vect)
+    X_train_counts = mev.fit_transform(clear_message)
+    X_train_counts.shape[0]
+    scaler = MinMaxScaler(feature_range=(0, 100))
+    scaler.fit(X_train_counts)
+    X_train_counts = scaler.transform(X_train_counts)
+    X_train_counts = sparse.csr_matrix(X_train_counts)
+
+    model = read_pickle('modelSVCw2v')
+    predicted = model.predict_proba(X_train_counts)
+    return zip(messages, predicted)
 
 
 if __name__ == '__main__':
