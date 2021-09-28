@@ -243,7 +243,8 @@ def classifier(messages):
     #
     # model = read_pickle('modelSVCw2v')
     # predicted = model.predict_proba(X_train_counts)
-    return zip(messages, predicted)
+    # return zip(messages, predicted)
+    return ['boob']
 
 
 if __name__ == '__main__':
