@@ -28,17 +28,17 @@ def get_posts(id):
         messages = {}
         for i in posts['items']:
             messages[i['id']] = i['text']
+        res = vect_svc.classifier(messages.values())
+        # labeled = [j[0] for i, j in vect_svc.classifier(messages.values())]
+        # it = 0
+        # for i in posts['items']:
+        #     marked_posts.append({
+        #         'post_id': i['id'],
+        #         'toxicity': labeled[it]
+        #     })
+        #     it = it + 1
 
-        labeled = [j[0] for i, j in vect_svc.classifier(messages.values())]
-        it = 0
-        for i in posts['items']:
-            marked_posts.append({
-                'post_id': i['id'],
-                'toxicity': labeled[it]
-            })
-            it = it + 1
-
-        return {'posts': posts, 'labeled': marked_posts}
+        return True
     except:
         abort(400)
 
