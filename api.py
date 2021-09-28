@@ -16,8 +16,9 @@ def get_users(id):
     try:
         users = forVK.get_user(id)
         return {'users': users}
-    except:
-        abort(400)
+    except Exception as e:
+        print(e)
+        abort(400, e)
 
 
 @app.route('/toxicity_py/api/posts/<string:id>', methods=['GET'])
@@ -37,10 +38,10 @@ def get_posts(id):
                 'toxicity': labeled[it]
             })
             it = it + 1
-
         return {'posts': posts, 'labeled': marked_posts}
-    except:
-        abort(400)
+    except Exception as e:
+        print(e)
+        abort(400, e)
 
 
 @app.route('/toxicity_py/api/comments/<string:group_screen_name>/<string:post_id>', methods=['GET'])
@@ -48,8 +49,9 @@ def get_comments(group_screen_name, post_id):
     try:
         comments = forVK.get_posts_comments(group_screen_name, post_id)
         return {'comments': comments}
-    except:
-        abort(400)
+    except Exception as e:
+        print(e)
+        abort(400, e)
 
 
 # post 411
@@ -59,8 +61,9 @@ def get_answers(user_id, post_id, comments_id):
     try:
         answers = forVK.get_comment_comments(user_id, post_id, comments_id)
         return {'answers': answers}
-    except:
-        abort(400)
+    except Exception as e:
+        print(e)
+        abort(400, e)
 
 
 @app.route('/toxicity_py/api/followers/<string:id>', methods=['GET'])
@@ -68,8 +71,9 @@ def get_followers(id):
     try:
         followers = forVK.get_users_followers(id)
         return {'followers': followers}
-    except:
-        abort(400)
+    except Exception as e:
+        print(e)
+        abort(400, e)
 
 
 @app.route('/toxicity_py/api/subscriptions/<string:id>', methods=['GET'])
@@ -77,8 +81,9 @@ def get_subscriptions(id):
     try:
         subscriptions = forVK.get_users_subscriptions(id)
         return {'subscriptions': subscriptions}
-    except:
-        abort(400)
+    except Exception as e:
+        print(e)
+        abort(400, e)
 
 
 @app.route('/toxicity_py/api/groups/<string:id>', methods=['GET'])
@@ -86,7 +91,9 @@ def get_groups(id):
     try:
         groups = forVK.get_group(id)
         return jsonify({'groups': groups})
-    except:
+    except Exception as e:
+        print(e)
+        abort(400, e)
         return {'message': "Что-то пошло не так!"}
 
 
@@ -95,8 +102,8 @@ def get_members(id):
     try:
         members = forVK.get_groups_members(id)
         return {'members': members}
-    except:
-        abort(400)
+    except Exception as e:
+        abort(400, e)
 
 
 @app.route('/toxicity_py/api/message', methods=['POST', 'GET'])
