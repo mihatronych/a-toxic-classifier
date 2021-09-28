@@ -42,7 +42,7 @@ def get_post(post_id):
 
 
 # получить получить посты владельца (группы или пользователя) по его ID
-def get_posts(owner, count=100):
+def get_posts(owner, count=10):
     try:
         if owner.lstrip('-').isdigit():
             return vk_api.wall.get(owner_id=int(owner), count=str(count), filter="all")
