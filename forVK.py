@@ -1,5 +1,4 @@
 import os
-
 import vk
 import vk.exceptions
 from dotenv import load_dotenv
