@@ -5,6 +5,7 @@ import re
 from string import punctuation
 import fasttext
 import nltk
+nltk.download('punkt')
 import numpy as np
 import pandas as pd
 import pymorphy2

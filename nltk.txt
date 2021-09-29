@@ -1,5 +1,4 @@
 wordnet
-tokenize
 stopwords
 word_tokenize
 punkt
