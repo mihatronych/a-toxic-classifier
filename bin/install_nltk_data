@@ -13,6 +13,12 @@ echo "-----> Starting nltk data installation"
 # so you may want to change for your specific needs.
 # See http://www.nltk.org/data.html
 python -m nltk.downloader stopwords
+python -m nltk.downloader punkt
+python -m nltk.downloader word_tokenize
+python -m nltk.downloader stopwords
+python -m nltk.downloader tokenize
+
+
 
 # If using Textblob, use this instead:
 # python -m textblob.download_corpora lite
