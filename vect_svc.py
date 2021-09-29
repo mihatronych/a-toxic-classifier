@@ -72,14 +72,14 @@ def write_pickle(file, name):
 
 
 def read_pickle(name):
-    print(os.path.dirname(os.path.abspath(__file__)))
+    #print(os.path.dirname(os.path.abspath(__file__)))
     with open(os.path.dirname(os.path.abspath(__file__)) + '/' + name + '.pkl', 'rb') as f:
         return pickle.load(f)
 
 
 def preprocess(input_data):
     train_db = pd.read_csv(input_data, sep=",", error_bad_lines=False)  # получение датасета
-    print("Препроцессинг")
+    #print("Препроцессинг")
     train_db['comment'] = train_db['comment'].map(preprocessing_data)  # подготовка данных к обработке
     return train_db
 
@@ -120,7 +120,7 @@ class MyTokenizer:
             for sent in nltk.sent_tokenize(document):
                 tokenized_doc += nltk.word_tokenize(sent)
             transformed_X.append(np.array(tokenized_doc))
-        return np.array(transformed_X)
+        return np.array(transformed_X, dtype=object)
 
     def fit_transform(self, X, y=None):
         return self.transform(X)
@@ -130,7 +130,7 @@ def train_word2vec(tokens):
     w2v_model = Word2Vec(min_count=5, window=10, size=150, negative=10,
                          alpha=0.03, min_alpha=0.0007, sample=6e-5, sg=0)
     w2v_model.build_vocab(tokens)
-    print(w2v_model.corpus_count)
+    #print(w2v_model.corpus_count)
     w2v_model.train(tokens, total_examples=w2v_model.corpus_count, epochs=300, report_delay=1)
     w2v_model.init_sims(replace=True)
     write_pickle(w2v_model, 'w2v_model5')
@@ -140,7 +140,7 @@ def train_word2vec(tokens):
 def train_fasttext(tokens):
     ft_model = FastText(min_count=10, window=5, size=150, negative=10, alpha=0.03, min_alpha=0.0007, sample=6e-5, sg=0)
     ft_model.build_vocab(tokens)
-    print(ft_model.corpus_count)
+    #print(ft_model.corpus_count)
     ft_model.train(tokens, total_examples=ft_model.corpus_count, epochs=300, report_delay=1)
     ft_model.init_sims(replace=True)
     write_pickle(ft_model, 'ft_model2')
@@ -192,7 +192,7 @@ def training_data(input_data):
     X_train, X_test, y_train, y_test = train_test_split(train_db['comment'].values.astype('U'), train_db['toxic'],
                                                         test_size=0.33,
                                                         random_state=42)
-    print("Векторизация")
+    #print("Векторизация")
     # формирование словаря
     # tokens = train_db["comment"].values.astype('U')
     # tokens = [token.split(" ") for token in tokens]
@@ -206,7 +206,7 @@ def training_data(input_data):
     X_train_counts = scaler.transform(X_train_counts)
     X_train_counts = sparse.csr_matrix(X_train_counts)
 
-    print("Обучение SVC классификатора")
+    #print("Обучение SVC классификатора")
     # тренировка классификтора
     # model = SVC(kernel='linear', probability=True, C=0.1).fit(X_train_counts, y_train)
     # write_pickle(model, 'modelSVCw2v')
@@ -220,14 +220,14 @@ def training_data(input_data):
     X_test_counts = scaler.transform(X_test_counts)
     X_test_counts = sparse.csr_matrix(X_test_counts)
 
-    print("Оценка точности SVC классификатора")
+    #print("Оценка точности SVC классификатора")
     # оценка точности классификатора
     predicted = model.predict(X_test_counts)
     acc = np.mean(predicted == y_test)
-    print("Точность: ", acc)
+    #print("Точность: ", acc)
 
     report = classification_report(y_test, model.predict(X_test_counts), target_names=['untoxic', 'toxic'])
-    print(report)
+    #print(report)
 
 
 def classifier(messages):
@@ -255,9 +255,9 @@ if __name__ == '__main__':
     input_data = 'labeled_ru_ds.csv'  # для новой прогонки
     # training_data(input_data)
     res = some_spicy_features_extraction(messages[0])
-    print(res)
+    #print(res)
     labeled_messages = classifier(messages)
-    print(list(labeled_messages))
+    #print(list(labeled_messages))
     # counter = 0
     # for comment, toxic in labeled_messages:
     #     print('%r => %s' % (comment, toxic))
