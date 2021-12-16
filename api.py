@@ -6,7 +6,7 @@ import forVK
 import vect_svc
 import gunicorn
 from waitress import serve
-
+import pictures
 app = Flask(__name__)
 api = Api(app)
 
@@ -190,6 +190,20 @@ class Post(Resource):
         except:
             abort(500, 'Something goes wrong')
 
+
+@app.route('/toxicity_py/api/picture', methods=['POST', 'GET'])
+def get_message():
+    if request.method == 'GET':
+        data = request.json['picture']
+        untoxic, toxic = pictures.classify_pic([data])
+        result = []
+        result.append({
+                'untoxic': str(untoxic),
+                'toxic': str(toxic)
+            })
+        return jsonify(result)
+    else:
+        abort(400)
 
 api.add_resource(Post, "/toxicity_py/api/post/<string:post_id>")
 
