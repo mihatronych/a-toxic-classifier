@@ -7,6 +7,7 @@ import vect_svc
 import gunicorn
 from waitress import serve
 import pictures
+
 app = Flask(__name__)
 api = Api(app)
 import numpy as np
@@ -226,6 +227,7 @@ def get_pictures():
         abort(400)
 
 api.add_resource(Post, "/toxicity_py/api/post/<string:post_id>")
+
 
 if __name__ == "__main__":
     serve(app, host="0.0.0.0", port=8080)

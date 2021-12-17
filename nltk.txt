@@ -5,4 +5,4 @@ punkt
 pros_cons
 reuters
 corpus
-
+tokenize
