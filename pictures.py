@@ -17,7 +17,7 @@ def read_pickle(name):
         return objects[0]
 
 
-def classify_pic(path):
+def classify_pic(p):
     model = read_pickle("data2")
     normalize = transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     tfms = transforms.Compose([
@@ -26,7 +26,7 @@ def classify_pic(path):
         transforms.ToTensor(),
         normalize,
     ])
-    img = Image.open(path)
+    img = Image.fromarray(p.astype("uint8"))
     img = img.convert('RGB')
     preproc_img = tfms(img).unsqueeze(0)
 
@@ -45,9 +45,9 @@ def classify_pic(path):
     for idx in torch.topk(outputs, k=2).indices.squeeze(0).tolist():
         prob = torch.softmax(outputs, dim=1)[0, idx].item()
         if idx==0:
-            ans.append('("{z}" : "{p:.2f}%")'.format(z='toxic', p=prob * 100))
+            ans.append("{p:.2f}%".format(p=prob * 100))  # z='toxic'
         else:
-            ans.append('("{z}" : "{p:.2f}%")'.format(z='untoxic', p=prob * 100))
+            ans.append("{p:.2f}%".format(p=prob * 100)) # z='untoxic'
     return ans
 
 if __name__ == '__main__':

@@ -117,6 +117,7 @@ tzlocal==1.5.1
 urllib3==1.25.11
 virtualenv==20.4.6
 vk==2.0.2
+waitress==2.0.0
 wasabi==0.8.2
 wcwidth==0.2.5
 Werkzeug==2.0.1
